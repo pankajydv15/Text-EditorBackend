@@ -12,7 +12,7 @@
 
   app.use(
     cors({
-      origin: ["http://localhost:5173", "https://texteditormain.netlify.app"], // ✅ Array format
+      origin: ["http://localhost:5173", "https://texteditormain.netlify.app"], 
       credentials: true,
     })
   );
@@ -20,7 +20,7 @@
   app.use(express.json());
   app.use(cookieParser());
 
-  // Passport Google Strategy
+  
   passport.use(
     new GoogleStrategy(
       {
@@ -42,7 +42,7 @@
     done(null, obj);
   });
 
-  // Google Auth Route
+
   app.get(
     "/auth/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
@@ -90,7 +90,7 @@
 
       const drive = google.drive({ version: "v3", auth });
 
-      // Get "Letter" folder ID
+     
       const folderResponse = await drive.files.list({
         q: "name='Letter' and mimeType='application/vnd.google-apps.folder' and 'root' in parents",
         fields: "files(id)",
@@ -103,7 +103,7 @@
 
       const folderId = folderResponse.data.files[0].id;
 
-      // Fetch only files inside "Letter" folder
+    
       const response = await drive.files.list({
         q: `'${folderId}' in parents and mimeType='application/vnd.google-apps.document'`,
         fields: "files(id, name, mimeType)",
