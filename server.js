@@ -10,7 +10,13 @@
   const app = express();
   const PORT = process.env.PORT || 5000;
 
-  app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+  app.use(
+    cors({
+      origin: ["http://localhost:5173", "https://texteditormain.netlify.app"], // ✅ Array format
+      credentials: true,
+    })
+  );
+
   app.use(express.json());
   app.use(cookieParser());
 
@@ -50,7 +56,7 @@
         expiresIn: "1h",
       });
       res.cookie("token", token, { httpOnly: true });
-      res.redirect("http://localhost:5173");
+      res.redirect("https://texteditormain.netlify.app");
     }
   );
 
